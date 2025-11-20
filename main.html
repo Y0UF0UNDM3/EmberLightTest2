@@ -5,35 +5,39 @@
     <title>EmberLight Game</title>
     <link rel="stylesheet" href="https://unpkg.com/leopard@^1/dist/index.min.css" />
     <style>
-      /* Fullscreen project container and remove grey box */
-      #project {
-        outline: none;
-        border: none;
+      /* Make the project container fill the whole screen */
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* prevent scrollbars */
+        height: 100%;
         width: 100%;
-        height: 100vh;
-        margin: 0;
+        background: black; /* optional */
       }
-      body {
-        margin: 0;
-        background: black; /* optional, your own game may draw its own background */
+      #project {
+        width: 100%;
+        height: 100%;
       }
     </style>
   </head>
   <body>
+    <!-- Project container -->
     <div id="project"></div>
 
     <script type="module">
-      // Import the main project JS
       import project from "./index.js";
 
-      // Log for debugging
-      console.log("main.html loaded!");
-
-      // Attach the project to the container
+      // Attach project to div
       project.attach("#project");
 
-      // Start the game automatically
+      // Start the project logic
       project.greenFlag();
+
+      // Play sound after first user interaction (browser autoplay rule)
+      document.body.addEventListener("click", () => {
+        const titleScreen = project.sprites.TitleScreen;
+        if (titleScreen) titleScreen.playSoundUntilDone("emberlight-titlescreen");
+      }, { once: true });
     </script>
   </body>
 </html>
