@@ -5,7 +5,7 @@
     <title>EmberLight Game</title>
     <link rel="stylesheet" href="https://unpkg.com/leopard@^1/dist/index.min.css" />
     <style>
-      /* Remove grey outline and fullscreen container */
+      /* Fullscreen project container and remove grey box */
       #project {
         outline: none;
         border: none;
@@ -15,6 +15,7 @@
       }
       body {
         margin: 0;
+        background: black; /* optional, your own game may draw its own background */
       }
     </style>
   </head>
@@ -22,11 +23,17 @@
     <div id="project"></div>
 
     <script type="module">
+      // Import the main project JS
       import project from "./index.js";
 
+      // Log for debugging
       console.log("main.html loaded!");
+
+      // Attach the project to the container
       project.attach("#project");
-      project.greenFlag(); // auto-start game
+
+      // Start the game automatically
+      project.greenFlag();
     </script>
   </body>
 </html>
