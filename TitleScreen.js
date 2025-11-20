@@ -13,56 +13,25 @@ export default class TitleScreen extends Sprite {
   constructor(...args) {
     super(...args);
 
+    // Costumes (all in root folder)
     this.costumes = [
-      new Costume("1", "./TitleScreen/costumes/1.svg", {
-        x: 714.9237060546875,
-        y: 714.9237060546876,
-      }),
-      new Costume("2", "./TitleScreen/costumes/2.svg", {
-        x: 714.9237060546875,
-        y: 714.9237060546876,
-      }),
-      new Costume("3", "./TitleScreen/costumes/3.svg", {
-        x: 714.9237060546875,
-        y: 714.9237060546876,
-      }),
-      new Costume("[Playbutton]", "./TitleScreen/costumes/[Playbutton].svg", {
-        x: 33.900000000000006,
-        y: 13.199999999999989,
-      }),
-      new Costume("[Loadbutton]", "./TitleScreen/costumes/[Loadbutton].svg", {
-        x: 33.900000000000006,
-        y: 13.199999999999989,
-      }),
-      new Costume(
-        "[Settingsbutton]",
-        "./TitleScreen/costumes/[Settingsbutton].svg",
-        { x: 33.89999999999992, y: 13.199999999999989 }
-      ),
-      new Costume("Emberlight", "./TitleScreen/costumes/Emberlight.svg", {
-        x: 293.5435485839844,
-        y: 127.62763214111328,
-      }),
+      new Costume("1", "./1.svg", { x: 714.9237060546875, y: 714.9237060546876 }),
+      new Costume("2", "./2.svg", { x: 714.9237060546875, y: 714.9237060546876 }),
+      new Costume("3", "./3.svg", { x: 714.9237060546875, y: 714.9237060546876 }),
+      new Costume("[Playbutton]", "./[Playbutton].svg", { x: 33.9, y: 13.2 }),
+      new Costume("[Loadbutton]", "./[Loadbutton].svg", { x: 33.9, y: 13.2 }),
+      new Costume("[Settingsbutton]", "./[Settingsbutton].svg", { x: 33.9, y: 13.2 }),
+      new Costume("Emberlight", "./Emberlight.svg", { x: 293.5435, y: 127.6276 }),
     ];
 
+    // Sounds (in root folder)
     this.sounds = [
-      new Sound(
-        "emberlight-titlescreen",
-        "./TitleScreen/sounds/emberlight-titlescreen.wav"
-      ),
+      new Sound("emberlight-titlescreen", "./emberlight-titlescreen.wav"),
     ];
 
     this.triggers = [
-      new Trigger(
-        Trigger.BROADCAST,
-        { name: "Startscreen" },
-        this.whenIReceiveStartscreen
-      ),
-      new Trigger(
-        Trigger.BROADCAST,
-        { name: "Clear the dang screen" },
-        this.whenIReceiveClearTheDangScreen
-      ),
+      new Trigger(Trigger.BROADCAST, { name: "Startscreen" }, this.whenIReceiveStartscreen),
+      new Trigger(Trigger.BROADCAST, { name: "Clear the dang screen" }, this.whenIReceiveClearTheDangScreen),
       new Trigger(Trigger.GREEN_FLAG, this.whenGreenFlagClicked),
       new Trigger(Trigger.GREEN_FLAG, this.whenGreenFlagClicked2),
     ];
@@ -133,37 +102,31 @@ export default class TitleScreen extends Sprite {
         this.vars.backdroptransition = 2;
         this.stage.vars.whicheverBackdropItIsRightNow = this.random(1, 3);
       }
-    } else {
-      if (this.toNumber(this.vars.backdroptransition) === 0) {
-        if (this.toString(this.vars.backdropwaitinator) === "nothanks") {
-          this.vars.backdropwaitinator =
-            ((new Date().getTime() - new Date(2000, 0, 1)) / 1000 / 60 +
-              new Date().getTimezoneOffset()) /
+    } else if (this.toNumber(this.vars.backdroptransition) === 0) {
+      if (this.toString(this.vars.backdropwaitinator) === "nothanks") {
+        this.vars.backdropwaitinator =
+          ((new Date().getTime() - new Date(2000, 0, 1)) / 1000 / 60 +
+            new Date().getTimezoneOffset()) /
+          60 /
+          24;
+      }
+      if (
+        this.compare(
+          0.0001,
+          ((new Date().getTime() - new Date(2000, 0, 1)) / 1000 / 60 +
+            new Date().getTimezoneOffset()) /
             60 /
-            24;
-        }
-        if (
-          this.compare(
-            0.0001,
-            ((new Date().getTime() - new Date(2000, 0, 1)) / 1000 / 60 +
-              new Date().getTimezoneOffset()) /
-              60 /
-              24 -
-              this.toNumber(this.vars.backdropwaitinator)
-          ) < 0
-        ) {
-          this.vars.backdropwaitinator = "nothanks";
-          this.vars.backdroptransition = 1;
-        }
-      } else {
-        if (this.toNumber(this.vars.backdroptransition) === 2) {
-          this.stage.vars.brightnessthing++;
-          if (this.toNumber(this.stage.vars.brightnessthing) === 0) {
-            this.vars.backdroptransition = 0;
-          }
-        } else {
-          null;
-        }
+            24 -
+            this.toNumber(this.vars.backdropwaitinator)
+        ) < 0
+      ) {
+        this.vars.backdropwaitinator = "nothanks";
+        this.vars.backdroptransition = 1;
+      }
+    } else if (this.toNumber(this.vars.backdroptransition) === 2) {
+      this.stage.vars.brightnessthing++;
+      if (this.toNumber(this.stage.vars.brightnessthing) === 0) {
+        this.vars.backdroptransition = 0;
       }
     }
   }
