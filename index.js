@@ -1,12 +1,9 @@
-import {
-  Project,
-  Sprite,
-} from "https://unpkg.com/leopard@^1/dist/index.esm.js";
+import { Project, Sprite } from "https://unpkg.com/leopard@^1/dist/index.esm.js";
 
-import Stage from "./Stage/Stage.js";
-import TitleScreen from "./TitleScreen/TitleScreen.js";
-import Particles from "./Particles/Particles.js";
-import Smokeparticles from "./Smokeparticles/Smokeparticles.js";
+import Stage from "./Stage.js";
+import TitleScreen from "./TitleScreen.js";
+import Particles from "./Particles.js";
+import Smokeparticles from "./Smokeparticles.js";
 
 const stage = new Stage({ costumeNumber: 1 });
 
@@ -44,6 +41,7 @@ const sprites = {
 };
 
 const project = new Project(stage, sprites, {
-  frameRate: 30, // Set to 60 to make your project run faster
+  frameRate: 30,
 });
+
 export default project;
