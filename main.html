@@ -5,6 +5,7 @@
     <title>EmberLight Game</title>
     <link rel="stylesheet" href="https://unpkg.com/leopard@^1/dist/index.min.css" />
     <style>
+      /* Remove grey outline and fullscreen container */
       #project {
         outline: none;
         border: none;
@@ -12,7 +13,9 @@
         height: 100vh;
         margin: 0;
       }
-      body { margin: 0; }
+      body {
+        margin: 0;
+      }
     </style>
   </head>
   <body>
@@ -23,7 +26,7 @@
 
       console.log("main.html loaded!");
       project.attach("#project");
-      project.greenFlag();
+      project.greenFlag(); // auto-start game
     </script>
   </body>
 </html>
