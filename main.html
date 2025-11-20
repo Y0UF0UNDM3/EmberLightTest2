@@ -3,39 +3,26 @@
   <head>
     <meta charset="UTF-8">
     <title>EmberLight Game</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leopard@^1/dist/index.min.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/leopard@^1/dist/index.min.css" />
     <style>
-      /* Remove default outline and borders */
       #project {
         outline: none;
         border: none;
         width: 100%;
-        height: 100vh;  /* full viewport height */
+        height: 100vh;
         margin: 0;
       }
-
-      /* Remove default body margin and set background */
-      body {
-        margin: 0;
-        background: black; /* optional: game background */
-      }
+      body { margin: 0; }
     </style>
   </head>
   <body>
-    <!-- Project container -->
     <div id="project"></div>
 
     <script type="module">
-      // Import the main project code
       import project from "./index.js";
 
-      // Attach the project to the div
+      console.log("main.html loaded!");
       project.attach("#project");
-
-      // Autoplay the project
       project.greenFlag();
     </script>
   </body>
