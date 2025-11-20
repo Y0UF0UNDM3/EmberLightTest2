@@ -14,16 +14,23 @@
         background: black;
       }
 
-      #project {
+      #wrapper {
         position: absolute;
         top: 50%;
         left: 50%;
         transform-origin: top left;
       }
+
+      #project {
+        width: 480px;   /* original Leopard canvas width */
+        height: 360px;  /* original Leopard canvas height */
+      }
     </style>
   </head>
   <body>
-    <div id="project"></div>
+    <div id="wrapper">
+      <div id="project"></div>
+    </div>
 
     <script type="module">
       import project from "./index.js";
@@ -31,40 +38,28 @@
       // Attach project
       project.attach("#project");
 
-      // Scale project to fit window
+      // Start project logic
+      project.greenFlag();
+
+      // Scale wrapper to fit browser window
       function scaleProject() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const scale = Math.min(width / 480, height / 360);
-        const projectDiv = document.getElementById("project");
-        projectDiv.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        const wrapper = document.getElementById("wrapper");
+        const scale = Math.min(window.innerWidth / 480, window.innerHeight / 360);
+        wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
       }
 
       scaleProject();
       window.addEventListener("resize", scaleProject);
 
-      // Start project logic
-      project.greenFlag();
+      // Play music
+      const audio = new Audio("./emberlight-titlescreen.wav");
+      audio.loop = true;
+      audio.volume = 1;
 
-      // Play music automatically using the browser-friendly loop
-      const titleScreen = project.sprites.TitleScreen;
-      if (titleScreen) {
-        // Non-blocking loop using setInterval
-        function playMusicLoop() {
-          const sound = titleScreen.sounds.find(s => s.name === "emberlight-titlescreen");
-          if (!sound) return;
-          // create an audio element
-          const audio = new Audio(sound.asset.url || "./emberlight-titlescreen.wav");
-          audio.loop = true;
-          audio.volume = 1;
-          audio.play().catch(() => {
-            // In case autoplay is blocked, resume on first user interaction
-            document.body.addEventListener("click", () => audio.play(), { once: true });
-          });
-        }
-
-        playMusicLoop();
-      }
+      // Attempt autoplay; fallback to first click if blocked
+      audio.play().catch(() => {
+        document.body.addEventListener("click", () => audio.play(), { once: true });
+      });
     </script>
   </body>
 </html>
