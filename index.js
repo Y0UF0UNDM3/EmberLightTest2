@@ -5,8 +5,10 @@ import TitleScreen from "./TitleScreen.js";
 import Particles from "./Particles.js";
 import Smokeparticles from "./Smokeparticles.js";
 
+// Create the stage
 const stage = new Stage({ costumeNumber: 1 });
 
+// Create sprites
 const sprites = {
   TitleScreen: new TitleScreen({
     x: 24,
@@ -40,6 +42,7 @@ const sprites = {
   }),
 };
 
+// Create the project
 const project = new Project(stage, sprites, {
   frameRate: 30,
 });
