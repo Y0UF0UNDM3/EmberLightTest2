@@ -28,38 +28,43 @@
     <script type="module">
       import project from "./index.js";
 
-      // Attach the project
+      // Attach project
       project.attach("#project");
 
-      // Scale project to fit window while maintaining aspect ratio
+      // Scale project to fit window
       function scaleProject() {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const scale = Math.min(width / 480, height / 360); // 480x360 is default Leopard size
+        const scale = Math.min(width / 480, height / 360);
         const projectDiv = document.getElementById("project");
         projectDiv.style.transform = `translate(-50%, -50%) scale(${scale})`;
       }
 
-      // Initial scale
       scaleProject();
       window.addEventListener("resize", scaleProject);
 
       // Start project logic
       project.greenFlag();
 
-      // Loop title screen music after first click (browser allows)
-      let musicStarted = false;
-      document.body.addEventListener("click", async () => {
-        if (!musicStarted) {
-          musicStarted = true;
-          const titleScreen = project.sprites.TitleScreen;
-          if (titleScreen) {
-            while (true) {
-              await titleScreen.playSoundUntilDone("emberlight-titlescreen");
-            }
-          }
+      // Play music automatically using the browser-friendly loop
+      const titleScreen = project.sprites.TitleScreen;
+      if (titleScreen) {
+        // Non-blocking loop using setInterval
+        function playMusicLoop() {
+          const sound = titleScreen.sounds.find(s => s.name === "emberlight-titlescreen");
+          if (!sound) return;
+          // create an audio element
+          const audio = new Audio(sound.asset.url || "./emberlight-titlescreen.wav");
+          audio.loop = true;
+          audio.volume = 1;
+          audio.play().catch(() => {
+            // In case autoplay is blocked, resume on first user interaction
+            document.body.addEventListener("click", () => audio.play(), { once: true });
+          });
         }
-      }, { once: true });
+
+        playMusicLoop();
+      }
     </script>
   </body>
 </html>
