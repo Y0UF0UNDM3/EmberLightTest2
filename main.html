@@ -10,10 +10,11 @@
         margin: 0;
         padding: 0;
         overflow: hidden; /* prevent scrollbars */
-        height: 100%;
         width: 100%;
-        background: black; /* optional */
+        height: 100%;
+        background: black; /* optional background */
       }
+
       #project {
         width: 100%;
         height: 100%;
@@ -30,13 +31,15 @@
       // Attach project to div
       project.attach("#project");
 
-      // Start the project logic
+      // Start project logic (TitleScreen and other sprites)
       project.greenFlag();
 
-      // Play sound after first user interaction (browser autoplay rule)
+      // Play title screen music after first user interaction (required by browsers)
       document.body.addEventListener("click", () => {
         const titleScreen = project.sprites.TitleScreen;
-        if (titleScreen) titleScreen.playSoundUntilDone("emberlight-titlescreen");
+        if (titleScreen) {
+          titleScreen.playSoundUntilDone("emberlight-titlescreen");
+        }
       }, { once: true });
     </script>
   </body>
