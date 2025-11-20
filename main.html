@@ -8,11 +8,12 @@
       html, body {
         margin: 0;
         padding: 0;
-        overflow: hidden;
         width: 100%;
         height: 100%;
+        overflow: hidden;
         background: black;
       }
+
       #project {
         position: absolute;
         top: 50%;
@@ -27,31 +28,37 @@
     <script type="module">
       import project from "./index.js";
 
-      // Attach project to div
+      // Attach the project
       project.attach("#project");
 
-      // Function to scale project to fullscreen while keeping aspect ratio
+      // Scale project to fit window while maintaining aspect ratio
       function scaleProject() {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const scale = Math.min(width / 480, height / 360); // 480x360 is Leopard default
+        const scale = Math.min(width / 480, height / 360); // 480x360 is default Leopard size
         const projectDiv = document.getElementById("project");
         projectDiv.style.transform = `translate(-50%, -50%) scale(${scale})`;
       }
 
-      // Initial scaling
+      // Initial scale
       scaleProject();
-
-      // Re-scale on window resize
       window.addEventListener("resize", scaleProject);
 
       // Start project logic
       project.greenFlag();
 
-      // Play title screen music after first user click
-      document.body.addEventListener("click", () => {
-        const titleScreen = project.sprites.TitleScreen;
-        if (titleScreen) titleScreen.playSoundUntilDone("emberlight-titlescreen");
+      // Loop title screen music after first click (browser allows)
+      let musicStarted = false;
+      document.body.addEventListener("click", async () => {
+        if (!musicStarted) {
+          musicStarted = true;
+          const titleScreen = project.sprites.TitleScreen;
+          if (titleScreen) {
+            while (true) {
+              await titleScreen.playSoundUntilDone("emberlight-titlescreen");
+            }
+          }
+        }
       }, { once: true });
     </script>
   </body>
