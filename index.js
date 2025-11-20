@@ -1,5 +1,6 @@
 import { Project, Sprite } from "https://unpkg.com/leopard@^1/dist/index.esm.js";
 
+// Import all your project JS files (root folder)
 import Stage from "./Stage.js";
 import TitleScreen from "./TitleScreen.js";
 import Particles from "./Particles.js";
@@ -8,7 +9,7 @@ import Smokeparticles from "./Smokeparticles.js";
 // Create the stage
 const stage = new Stage({ costumeNumber: 1 });
 
-// Create sprites
+// Create all sprites
 const sprites = {
   TitleScreen: new TitleScreen({
     x: 24,
@@ -47,4 +48,8 @@ const project = new Project(stage, sprites, {
   frameRate: 30,
 });
 
+// Debug log
+console.log("index.js loaded!", project);
+
+// Export for main.html
 export default project;
