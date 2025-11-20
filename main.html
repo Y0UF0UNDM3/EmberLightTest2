@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,19 +7,15 @@
     />
   </head>
   <body>
-    <button id="greenFlag">Green Flag</button>
     <div id="project"></div>
 
     <script type="module">
       import project from "./index.js";
 
+      // Attach the project to the div
       project.attach("#project");
 
-      document.querySelector("#greenFlag").addEventListener("click", () => {
-        project.greenFlag();
-      });
-
-      // Autoplay
+      // Autoplay the project
       project.greenFlag();
     </script>
   </body>
