@@ -50,23 +50,24 @@
       function playMusic() {
         if (!musicStarted) {
           audio.play().catch(() => {
-            // If autoplay is blocked, do nothing; user click will trigger it
+            console.log("Autoplay blocked, will play on first user interaction.");
           });
           musicStarted = true;
         }
       }
 
-      // Try autoplay immediately
+      // Attempt autoplay immediately
       playMusic();
 
-      // Fallback: start music on first click (only once)
+      // Fallback: first click or first mouse movement triggers music (once)
       document.body.addEventListener("click", playMusic, { once: true });
+      document.body.addEventListener("mousemove", playMusic, { once: true });
 
       // Scaling & centering
       const wrapper = document.getElementById("wrapper");
       function scaleProject() {
         const scale = Math.min(window.innerWidth / 480, window.innerHeight / 360);
-        wrapper.style.transform = `translate(-95%, -100%) scale(${scale})`; // shifted up & left
+        wrapper.style.transform = `translate(-55%, -60%) scale(${scale})`; // shifted up & left
       }
 
       scaleProject();
