@@ -22,8 +22,8 @@
       }
 
       #project {
-        width: 480px;   /* original Leopard canvas width */
-        height: 360px;  /* original Leopard canvas height */
+        width: 480px;   /* original Leopard width */
+        height: 360px;  /* original Leopard height */
       }
     </style>
   </head>
@@ -41,9 +41,30 @@
       // Start project logic
       project.greenFlag();
 
-      // Scale wrapper to fit browser window
+      // Music setup
+      const audio = new Audio("./emberlight-titlescreen.wav");
+      audio.loop = true;
+      audio.volume = 1;
+      let musicStarted = false;
+
+      function playMusic() {
+        if (!musicStarted) {
+          audio.play().catch(() => {
+            // If autoplay is blocked, do nothing; user click will trigger it
+          });
+          musicStarted = true;
+        }
+      }
+
+      // Try autoplay immediately
+      playMusic();
+
+      // Fallback: start music on first click (only once)
+      document.body.addEventListener("click", playMusic, { once: true });
+
+      // Scaling & centering
+      const wrapper = document.getElementById("wrapper");
       function scaleProject() {
-        const wrapper = document.getElementById("wrapper");
         const scale = Math.min(window.innerWidth / 480, window.innerHeight / 360);
         wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
       }
@@ -51,15 +72,12 @@
       scaleProject();
       window.addEventListener("resize", scaleProject);
 
-      // Play music
-      const audio = new Audio("./emberlight-titlescreen.wav");
-      audio.loop = true;
-      audio.volume = 1;
-
-      // Attempt autoplay; fallback to first click if blocked
-      audio.play().catch(() => {
-        document.body.addEventListener("click", () => audio.play(), { once: true });
-      });
+      // Re-center continuously in case Leopard changes canvas size dynamically
+      function updateCenter() {
+        scaleProject();
+        requestAnimationFrame(updateCenter);
+      }
+      requestAnimationFrame(updateCenter);
     </script>
   </body>
 </html>
