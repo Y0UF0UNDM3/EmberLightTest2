@@ -13,17 +13,20 @@ export default class Stage extends StageBase {
   constructor(...args) {
     super(...args);
 
+    // Costumes (in root folder)
     this.costumes = [
-      new Costume("backdrop1", "./Stage/costumes/backdrop1.svg", {
-        x: 240,
-        y: 180,
-      }),
+      new Costume("backdrop1", "./backdrop1.svg", { x: 240, y: 180 }),
     ];
 
-    this.sounds = [new Sound("pop", "./Stage/sounds/pop.wav")];
+    // Sounds (in root folder)
+    this.sounds = [
+      new Sound("emberlight-titlescreen", "./emberlight-titlescreen.wav"),
+    ];
 
+    // Triggers (empty for now)
     this.triggers = [];
 
+    // Stage variables
     this.vars.startscreenslide = 1;
     this.vars.whicheverBackdropItIsRightNow = 1;
     this.vars.brightnessthing = -23;
